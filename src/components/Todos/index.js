@@ -5,7 +5,7 @@ import List from './List'
 import Footer from './Footer'
 import './styles.css'
 
-function Todo() {
+function Todo({ token }) {
     const [filtering, setFiltering] = useState(0);
     const [todos, setTodos] = useState(
         JSON.parse(localStorage.getItem('todos')) || [
@@ -20,32 +20,39 @@ function Todo() {
         console.log('todos', todos)
     }, [todos])
 
-    return (
-        <section className='todoapp'>
-
-            <header className='header'>
-                <h1>todos</h1>
-                <Form
-                    addTodos={setTodos}
-                    todos={todos}
-                />
-            </header>
-
-            <div>
-                <List
-                    addTodos={setTodos}
-                    todos={todos}
-                    filtering={filtering}
-                />
-            </div>
-
+    var foot;
+    if (todos.length > 0) {
+        foot = (
             <Footer
                 addTodos={setTodos}
                 todos={todos}
                 filtering={filtering}
                 setFiltering={setFiltering}
             />
-        </section>
+        )
+    }
+
+    return (
+        <div className='todo'>
+            <section className='todoapp'>
+                <header className='header'>
+                    <h1>{token}'s todos</h1>
+                    <Form
+                        addTodos={setTodos}
+                        todos={todos}
+                    />
+                </header>
+
+                <div>
+                    <List
+                        addTodos={setTodos}
+                        todos={todos}
+                        filtering={filtering}
+                    />
+                </div>
+                {foot}
+            </section>
+        </div>
     )
 }
 
