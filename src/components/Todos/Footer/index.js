@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+
+import ThemeContext from '../../../context/ThemeContext';
 
 function Footer({ addTodos, todos, filtering, setFiltering }) {
 
@@ -14,9 +16,10 @@ function Footer({ addTodos, todos, filtering, setFiltering }) {
             </button>
     }
 
+    const { theme } = useContext(ThemeContext);
 
     return (
-        <footer className='footer'>
+        <footer className={`footer ${theme}`}>
             <span className='todo-count'>
                 <strong>{todos.filter(item => item.completed === false).length}</strong> item left
             </span>

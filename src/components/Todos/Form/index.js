@@ -36,6 +36,7 @@ function Form({ addTodos, todos }) {
 
     return (
         <div>
+            {alert()}
             <form
                 onSubmit={handleSubmit}>
                 <input
@@ -48,7 +49,6 @@ function Form({ addTodos, todos }) {
                     onChange={handleChange}
                 />
             </form>
-            {alert()}
         </div>
     )
 }

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 
 import Form from './Form'
 import List from './List'
 import Footer from './Footer'
 import './styles.css'
+
+import ThemeContext from '../../context/ThemeContext'
+import Button from '../Button/index'
 
 function Todo({ token }) {
     const [filtering, setFiltering] = useState(0);
@@ -32,9 +35,18 @@ function Todo({ token }) {
         )
     }
 
+    const { theme } = useContext(ThemeContext);
+
+    useEffect(() => {
+        document.body.classList.add(theme)
+        return () => {
+            document.body.classList.remove(theme)
+        }
+    }, [theme])
+
     return (
-        <div className='todo'>
-            <section className='todoapp'>
+        <div className={`todo ${theme}`}>
+            <section className={`todoapp ${theme}`}>
                 <header className='header'>
                     <h1>{token}'s todos</h1>
                     <Form
@@ -52,6 +64,7 @@ function Todo({ token }) {
                 </div>
                 {foot}
             </section>
+            <Button />
         </div>
     )
 }
