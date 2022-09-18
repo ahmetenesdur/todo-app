@@ -1,13 +1,16 @@
 import React, { useContext } from 'react'
+import Switch from '@mui/material/Switch';
 
 import ThemeContext from '../../context/ThemeContext'
+
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 function Button() {
     const { theme, setTheme } = useContext(ThemeContext)
 
     return (
-        <div>
-            <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>Change Theme</button>
+        <div className='onoff'>
+            <Switch {...label} color="secondary" defaultChecked onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} />
         </div>
     )
 }

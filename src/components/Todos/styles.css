@@ -441,3 +441,11 @@ meta,
 [property="todo"] .view:focus-within button {
     display: none !important;
 }
+
+.onoff {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 34px;
+}
