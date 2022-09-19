@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 function List({ addTodos, todos, filtering }) {
@@ -57,6 +58,28 @@ function List({ addTodos, todos, filtering }) {
         newArr[e.target.parentElement.id].isCompleted === true ?
             e.target.parentElement.className = "isCompleted" :
             e.target.parentElement.className = "";
+    }
+
+    const [apiData, setApiData] = useState([]);
+
+    useEffect(() => {
+        axios.get('https://632796839a053ff9aaa7bdc3.mockapi.io/todos')
+            .then((response) => {
+                setApiData(response.data.map((e) => e.formValues));
+            }, (error) => {
+                console.log(error);
+            });
+    }, [])
+
+    console.log(apiData);
+
+    const getData = (e) => {
+        axios.get('https://632796839a053ff9aaa7bdc3.mockapi.io/todos')
+            .then((response) => {
+                setApiData(response.data);
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     return (

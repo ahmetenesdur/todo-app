@@ -14,7 +14,7 @@ function Form({ addTodos, todos }) {
     }, [todos])
 
     const alert = () => {
-        if (formValues.input.length < 3 && formValues.input.length > 0) {
+        if (formValues.input.trim().length < 3 && formValues.input.length > 0) {
             return (<Stack sx={{ width: '100%' }} spacing={2}>
                 <Alert severity="warning">
                     Todo must be at least 3 characters long
@@ -31,13 +31,8 @@ function Form({ addTodos, todos }) {
         e.preventDefault()
 
         if (formValues.input.trim() === '') return '';
-        if (formValues.input.length < 3) return '';
+        if (formValues.input.trim().length < 3) return '';
 
-        addTodos([...todos, formValues])
-    }
-
-    const sendTodo = (e) => {
-        e.preventDefault()
         axios.post('https://632796839a053ff9aaa7bdc3.mockapi.io/todos', {
             formValues
         })
@@ -46,14 +41,15 @@ function Form({ addTodos, todos }) {
             }, (error) => {
                 console.log(error);
             });
-        return setFormValues(initialFormValues);
+
+        addTodos([...todos, formValues])
     }
 
     return (
         <div>
             {alert()}
             <form
-                onSubmit={sendTodo}>
+                onSubmit={handleSubmit}>
                 <input
                     className='new-todo'
                     placeholder='What needs to be done?'
