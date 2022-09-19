@@ -12,9 +12,9 @@ function Todo({ token }) {
     const [filtering, setFiltering] = useState(0);
     const [todos, setTodos] = useState(
         JSON.parse(localStorage.getItem('todos')) || [
-            { input: 'Learn React', completed: false },
-            { input: 'Learn Firebase', completed: true },
-            { input: 'Learn GraphQL', completed: false },
+            { input: 'Learn React', isCompleted: false },
+            { input: 'Learn Firebase', isCompleted: true },
+            { input: 'Learn GraphQL', isCompleted: false },
         ]
     )
 

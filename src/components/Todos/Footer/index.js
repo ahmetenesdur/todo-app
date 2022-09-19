@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 
 import ThemeContext from '../../../context/ThemeContext';
 
 function Footer({ addTodos, todos, filtering, setFiltering }) {
 
     const clearCompleted = () => {
-        addTodos(todos.filter((todo) => todo.completed === false))
+        addTodos(todos.filter((todo) => todo.isCompleted === false))
     }
 
     var clearCompletedButton;
-    if (todos.filter((todo) => todo.completed === true).length > 0) {
+    if (todos.filter((todo) => todo.isCompleted === true).length > 0) {
         clearCompletedButton =
-            <button className='clear-completed' onClick={clearCompleted}>
-                Clear completed
+            <button className='clear-isCompleted' onClick={clearCompleted}>
+                Clear isCompleted
             </button>
     }
 
@@ -21,7 +21,7 @@ function Footer({ addTodos, todos, filtering, setFiltering }) {
     return (
         <footer className={`footer ${theme}`}>
             <span className='todo-count'>
-                <strong>{todos.filter(item => item.completed === false).length}</strong> item left
+                <strong>{todos.filter(item => item.isCompleted === false).length}</strong> item left
             </span>
             <ul className='filters'>
                 <li>
@@ -46,8 +46,8 @@ function Footer({ addTodos, todos, filtering, setFiltering }) {
                 </li>
                 <li>
                     <a
-                        href='#/completed'
-                        id='completed'
+                        href='#/isCompleted'
+                        id='isCompleted'
                         onClick={() => setFiltering(2)}
                         className={filtering === 2 ? "selected" : null}
                     >

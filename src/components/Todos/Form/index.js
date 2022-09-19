@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
-const initialFormValues = { input: '', completed: false }
+const initialFormValues = { input: '', isCompleted: false }
 
 function Form({ addTodos, todos }) {
     const [formValues, setFormValues] = useState(initialFormValues)
@@ -10,10 +12,6 @@ function Form({ addTodos, todos }) {
     useEffect(() => {
         setFormValues(initialFormValues)
     }, [todos])
-
-    const handleChange = (e) => {
-        setFormValues({ ...formValues, input: e.target.value })
-    }
 
     const alert = () => {
         if (formValues.input.length < 3 && formValues.input.length > 0) {
@@ -25,6 +23,10 @@ function Form({ addTodos, todos }) {
         }
     }
 
+    const handleChange = (e) => {
+        setFormValues({ ...formValues, input: e.target.value })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -34,11 +36,24 @@ function Form({ addTodos, todos }) {
         addTodos([...todos, formValues])
     }
 
+    const sendTodo = (e) => {
+        e.preventDefault()
+        axios.post('https://632796839a053ff9aaa7bdc3.mockapi.io/todos', {
+            formValues
+        })
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+        return setFormValues(initialFormValues);
+    }
+
     return (
         <div>
             {alert()}
             <form
-                onSubmit={handleSubmit}>
+                onSubmit={sendTodo}>
                 <input
                     className='new-todo'
                     placeholder='What needs to be done?'

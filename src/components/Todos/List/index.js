@@ -7,7 +7,7 @@ function List({ addTodos, todos, filtering }) {
     var toggle;
 
     useEffect(() => {
-        if (todos.filter((todo) => todo.completed === false).length > 0) {
+        if (todos.filter((todo) => todo.isCompleted === false).length > 0) {
             setIsSubscribed(false)
         } else setIsSubscribed(true)
     }, [todos])
@@ -15,11 +15,11 @@ function List({ addTodos, todos, filtering }) {
     const handleChange = () => {
         if (isSubscribed === true) {
             addTodos(todos.map(todo => {
-                return { ...todo, completed: true }
+                return { ...todo, isCompleted: true }
             }))
         } else {
             addTodos(todos.map(todo => {
-                return { ...todo, completed: false }
+                return { ...todo, isCompleted: false }
             }))
         }
     }
@@ -55,7 +55,7 @@ function List({ addTodos, todos, filtering }) {
         addTodos(newArr.filter((e) => e.input !== ""));
 
         newArr[e.target.parentElement.id].isCompleted === true ?
-            e.target.parentElement.className = "completed" :
+            e.target.parentElement.className = "isCompleted" :
             e.target.parentElement.className = "";
     }
 
@@ -67,22 +67,22 @@ function List({ addTodos, todos, filtering }) {
                     (filtering === 0
                         ? todos
                         : (filtering === 1
-                            ? (todos.filter(e => e.completed === false))
-                            : (todos.filter(e => e.completed === true))
+                            ? (todos.filter(e => e.isCompleted === false))
+                            : (todos.filter(e => e.isCompleted === true))
                         )).map((todo, index) => (
                             <li
                                 key={index}
                                 id={index}
-                                className={todo.completed ? 'completed' : ''}>
+                                className={todo.isCompleted ? 'isCompleted' : ''}>
                                 <div className='view'>
                                     <input
                                         className='toggle'
                                         type='checkbox'
                                         id={todo.id}
-                                        checked={todo.completed}
+                                        checked={todo.isCompleted}
                                         onChange={() => {
                                             const newTodos = [...todos]
-                                            newTodos[index].completed = !newTodos[index].completed
+                                            newTodos[index].isCompleted = !newTodos[index].isCompleted
                                             addTodos(newTodos)
                                         }}
                                     />
