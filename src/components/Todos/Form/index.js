@@ -4,7 +4,7 @@ import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
-const initialFormValues = { input: '', isCompleted: false }
+const initialFormValues = { id: 0, input: '', isCompleted: false }
 
 function Form({ addTodos, todos }) {
     const [formValues, setFormValues] = useState(initialFormValues)
@@ -24,7 +24,7 @@ function Form({ addTodos, todos }) {
     }
 
     const handleChange = (e) => {
-        setFormValues({ ...formValues, input: e.target.value })
+        setFormValues({ ...formValues, input: e.target.value, id: todos.length + 1 })
     }
 
     const handleSubmit = (e) => {

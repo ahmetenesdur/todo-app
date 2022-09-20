@@ -51,13 +51,22 @@ function List({ addTodos, todos, filtering }) {
     }
 
     const submitEditedInput = (e) => {
-        let newArr = [...todos];
+        var newArr = [...todos];
         newArr[e.target.parentElement.id].input = editedInput;
         addTodos(newArr.filter((e) => e.input !== ""));
 
         newArr[e.target.parentElement.id].isCompleted === true ?
             e.target.parentElement.className = "isCompleted" :
             e.target.parentElement.className = "";
+
+        axios.put(`https://632796839a053ff9aaa7bdc3.mockapi.io/todos/${Number(e.target.parentElement.id) + 1}`, {
+            formValues: newArr[e.target.parentElement.id]
+        })
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     const [apiData, setApiData] = useState([]);
@@ -71,16 +80,9 @@ function List({ addTodos, todos, filtering }) {
             });
     }, [])
 
-    console.log(apiData);
-
-    const getData = (e) => {
-        axios.get('https://632796839a053ff9aaa7bdc3.mockapi.io/todos')
-            .then((response) => {
-                setApiData(response.data);
-            }, (error) => {
-                console.log(error);
-            });
-    }
+    useEffect(() => {
+        addTodos(apiData);
+    }, [apiData])
 
     return (
         <div>
@@ -107,6 +109,9 @@ function List({ addTodos, todos, filtering }) {
                                             const newTodos = [...todos]
                                             newTodos[index].isCompleted = !newTodos[index].isCompleted
                                             addTodos(newTodos)
+                                            axios.put(`https://632796839a053ff9aaa7bdc3.mockapi.io/todos/${todo.id}`, {
+                                                formValues: newTodos[index]
+                                            })
                                         }}
                                     />
                                     <label onDoubleClick={(e) => {
@@ -123,6 +128,7 @@ function List({ addTodos, todos, filtering }) {
                                             const newTodos = [...todos]
                                             newTodos.splice(index, 1)
                                             addTodos(newTodos)
+                                            axios.delete(`https://632796839a053ff9aaa7bdc3.mockapi.io/todos/${todo.id}`)
                                         }}
                                     />
                                 </div>
